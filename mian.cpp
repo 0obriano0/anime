@@ -47,12 +47,12 @@ int main(){
 			key2 = getch();
 			switch(key2){
 				case 72:
-					if(Num1 <= 1500)
-						Num1+=50;
-				break;
-				case 80:
 					if(Num1 > 0)
 						Num1-=50;
+				break;
+				case 80:
+					if(Num1 <= 1500)
+						Num1+=50;
 				break;
 			}
 		}else{
