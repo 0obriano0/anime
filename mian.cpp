@@ -6,6 +6,8 @@
 #include <conio.h>
 #include <process.h> //多執行續函式庫
 
+//-fpermissive
+
 using namespace std;
 
 void OpenFile(char *st);
@@ -15,7 +17,7 @@ void SetCursorVisible(BOOL Visible, DWORD Size);
 
 void anime_show(int *a){
 	int Num1 = 1;
-	while(1){		
+	while(1){
 		char st[100]="data\\image_";
 		char buffer[33];
 		itoa (Num1,buffer,10);
