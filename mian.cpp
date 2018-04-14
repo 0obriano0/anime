@@ -5,6 +5,8 @@
 #include <windows.h>
 #include <conio.h>
 #include <process.h> //多執行續函式庫
+#include "mmsystem.h"//?入?音?文件 
+#pragma comment(lib,"winmm.lib")//?入?音?文件? 
 
 //-fpermissive
 
@@ -35,6 +37,11 @@ void anime_show(int *a){
 }
 
 int main(){
+	
+	char buf[255];
+	mciSendString(("open Brain_Power.mp3 alias MUSIC"),buf,sizeof(buf),0);
+	mciSendString("play MUSIC repeat",NULL,0,0); 
+	
 	int Num1 = 50;
 	SetConsoleSize(650,900);
 	SetCursorVisible(false,1);
