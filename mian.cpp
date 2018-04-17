@@ -9,6 +9,8 @@
 #pragma comment(lib,"winmm.lib")//?入?音?文件? 
 
 //-fpermissive
+// link -lwinmm
+
 
 using namespace std;
 
