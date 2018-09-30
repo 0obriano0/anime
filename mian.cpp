@@ -8,6 +8,9 @@
 #include "mmsystem.h"//?入?音?文件 
 #pragma comment(lib,"winmm.lib")//?入?音?文件? 
 
+#define buffer_size 16384
+#define buffer_size_1 16384
+
 //-fpermissive
 // link -lwinmm
 
@@ -37,8 +40,12 @@ void anime_show(int *a){
 		Sleep(*a);
 	}
 }
-
+char buffer[buffer_size];
+int move = 0;
 int main(){
+	
+	
+	setvbuf(stdout,buffer,_IOFBF,buffer_size);
 	
 	char buf[255];
 	mciSendString(("open Brain_Power.mp3 alias MUSIC"),buf,sizeof(buf),0);
@@ -58,12 +65,16 @@ int main(){
 			key2 = getch();
 			switch(key2){
 				case 72:
-					if(Num1 > 0)
+					if(Num1 > 600)
+						Num1-=10;
+					else if(Num1 > 0)
 						Num1-=50;
 				break;
 				case 80:
-					if(Num1 <= 1500)
+					if(Num1 < 600)
 						Num1+=50;
+					else if(Num1 < 1500)
+						Num1+=10;
 				break;
 			}
 		}else{
@@ -78,10 +89,24 @@ void OpenFile(char *st){
 	
 	//若無此檔 c:\\test1.txt , 畫面會一閃而過(沒顯示訊息) 
 	if((fp=fopen( st , "r")) == NULL) printf("此程式找不到檔案，請找程式設計者詢問");;
-
-	while((ch = fgetc(fp)) != EOF) //讀取整個檔案 (直到檔案結尾) , 每次讀出一個字元  
-    fputc(ch,stdout);  //fputc(寫入字元, stdout指標準輸出/螢幕 )  
-
+	bool get_enter = false;
+	while((ch = fgetc(fp)) != EOF){ //讀取整個檔案 (直到檔案結尾) , 每次讀出一個字元
+		if(get_enter){
+			for(int loopnum1 = 0;loopnum1 < move*2;loopnum1++)
+				putc(' ',stdout);
+			get_enter = false;
+		}
+		if(ch == '\n')
+			get_enter = true;
+    	fputc(ch,stdout);  //fputc(寫入字元, stdout指標準輸出/螢幕 )
+	}
+	
+	fflush(stdout);
+	move++;
+	if(move == 50){
+		move = 0;
+		system("cls");
+	}
 	fclose(fp);  //關檔 
 }
 
